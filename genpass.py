@@ -1,21 +1,23 @@
 """
-Generate a cryptographically secure password
+Generate a cryptographically secure password.
 """
 
 import sys
-import string
 import random
+import string
+import argparse
 
-def genpass(length=32):
+def genpass(length):
 
-     return ''.join(random.SystemRandom().choice(string.letters + string.digits) for _ in range(length))
+     characters = string.letters + string.digits + string.punctuation
 
+     return ''.join(random.SystemRandom().choice(characters) for _ in range(length))
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
-     length = 32
+     parser = argparse.ArgumentParser()
+     parser.add_argument('-l', '--length', help='Password length desired.'
+                         , default=32, type=int)
+     args = parser.parse_args()
 
-     if len(sys.argv) > 1:
-          length = int(sys.argv[1])
-
-     print(genpass(length))
+     print(genpass(args.length))
